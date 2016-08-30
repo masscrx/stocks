@@ -37,6 +37,8 @@ app.controller("StocksController", ["$scope", function($scope) {
     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
   }
 
+  $scope.tickers = ["GICS","CIK","MMM","ABT","ABBV","ACN","ACE","ACT","ADBE","ADT","AES","AET","AFL","AMG","A","GAS","APD","ARG","AKAM","AA","ALXN","ATI","ALLE","ADS","ALL","ALTR","MO","AMZN","AEE","AAL"]
+
 
 
 }]);

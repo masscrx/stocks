@@ -1,3 +1,5 @@
+/** GENERAL TAGS AND STRUCTURE **/
+
 html, body {
   font-family: 'Open Sans', sans-serif;
   height: 100%; 
@@ -25,6 +27,8 @@ html, body {
 .main {
   padding: 20px;
 }
+
+/** PORTLET **/
 
 .portlet {
   position: relative;
@@ -110,4 +114,9 @@ html, body {
   -moz-border-radius-topright: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/** SPACES **/
+.ver-space {
+  margin-bottom: 15px;
 }
