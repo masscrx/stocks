@@ -1,11 +1,14 @@
 'use strict';
 
-app.controller("StocksController", ["$scope", function($scope) {
-
+app.controller("StocksController", ["$scope", "dataFactory", function($scope, dataFactory) {
+  
   /* Datepicker */
-  var currentDate = new Date();
-  $scope.startDate = currentDate.setMonth(currentDate.getMonth()-6);
-  $scope.endDate = new Date();
+  var currentDate, defaultEndDate;
+  currentDate = defaultEndDate = new Date();
+  var defaultStartDate = new Date(new Date().setMonth(new Date().getMonth()-6));
+
+  $scope.startDate = defaultStartDate;
+  $scope.endDate = defaultEndDate;
 
   $scope.dateOptions = {
     dateDisabled: disabled,
@@ -37,8 +40,30 @@ app.controller("StocksController", ["$scope", function($scope) {
     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
   }
 
-  $scope.tickers = ["GICS","CIK","MMM","ABT","ABBV","ACN","ACE","ACT","ADBE","ADT","AES","AET","AFL","AMG","A","GAS","APD","ARG","AKAM","AA","ALXN","ATI","ALLE","ADS","ALL","ALTR","MO","AMZN","AEE","AAL"]
+  /** Stocks operations **/
+  $scope.tickers = ["CIK","MMM","ABT","ABBV","ACN","ADBE","ADT","AES","AET","AFL","AMG","A","APD","ARG","AKAM","AA","ALXN","ATI"];
+  $scope.stocks = [];
+  $scope.stocksLimit = 3;
+  
+  $scope.addStock = function(stock) {
+    dataFactory.getStock({name: stock, startDate: $scope.startDate, endDate: $scope.endDate}).success(function(data, status){
+      var objAdded = {
+        symbol: data["query"]["results"]["quote"][0]["Symbol"],
+        quotes: data["query"]["results"]["quote"]
+      };
+      $scope.stocks.push(objAdded);
+      console.log($scope.stocks);
+    });
+  };
 
+  $scope.delStock = function(stock) {
+    
+    for (var i = 0; i < $scope.stocks.length; i++) {
+      if ($scope.stocks[i].symbol === stock) {
+        $scope.stocks.splice(i, 1);
+      }
+    }
 
-
+    console.log($scope.stocks);
+  };
 }]);
