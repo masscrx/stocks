@@ -45,15 +45,15 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   $scope.stocks = [];
   var stocksLimit = 3;
   
+
   $scope.addStock = function(stock) {
+
     if ($scope.stocks.length < stocksLimit) {
       dataFactory.getStock({name: stock, startDate: $scope.startDate, endDate: $scope.endDate}).success(function(data, status){
-        var objAdded = {
-          symbol: data["query"]["results"]["quote"][0]["Symbol"],
-          quotes: data["query"]["results"]["quote"]
-        };
-        $scope.stocks.push(objAdded);
-        console.log($scope.stocks);
+        console.log("Adding to stocks array: ", data)
+        $scope.stocks.push(data);
+        console.log("Stocks array: ", $scope.stocks);
+        $scope.apiOverallChart.update();
       });
     }
     else {
@@ -72,4 +72,56 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
 
     console.log($scope.stocks);
   };
+
+  /** Chart **/
+  $scope.options = {};
+  $scope.options.overallChart = {
+    chart: {
+      type: 'lineChart',
+      height: 450,
+      margin : {
+          top: 20,
+          right: 20,
+          bottom: 40,
+          left: 60
+      },
+      x: function(d){ return d.date; },
+      y: function(d){ return d.close; },
+      useInteractiveGuideline: true,
+      duration: 100,
+      xAxis: {
+              axisLabel: 'Date',
+              tickFormat: function(d) {
+                  return d3.time.format("%Y-%m-%d")(new Date(d));
+              },
+              showMaxMin: false
+              },
+
+      yAxis: {
+          axisLabel: 'Stock Price',
+          tickFormat: function(d){
+              return '$' + d3.format(',.1f')(d);
+          },
+          showMaxMin: false
+      }
+    }
+  };
+  $scope.exampleData = [
+      {
+        key: "Cisco", values: [
+         { "date": 1469059200000, "close": 150.00 },
+         { "date": 1469145600000, "close": 160.00 },
+         { "date": 1469232000000, "close": 170.00 }
+        ]
+      },
+      {
+        key: "Ewa", values: [
+         { "date": 1469059200000, "close": 5.00 },
+         { "date": 1469145600000, "close": 10.00 },
+         { "date": 1469232000000, "close": 20.00 }
+        ]
+      },
+
+    ];
+
 }]);

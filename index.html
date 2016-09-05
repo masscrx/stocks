@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.min.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
@@ -37,8 +38,8 @@
                 <h3><i class="fa fa-bar-chart-o"></i>Overall chart</h3>
               </div>
               <div class="portlet-content">
-                <div class="row">
 
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-inline">
                       <div class="form-group">
@@ -65,6 +66,12 @@
                     </div>
                   </div>
 
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <nvd3 options="options.overallChart" data="stocks" api="apiOverallChart"></nvd3>
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,6 +130,10 @@
 
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/d3/d3.min.js"></script>
+  <script src="bower_components/nvd3/build/nv.d3.min.js"></script>
+  <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+
   <script src="app/app.module.js"></script>
   <script src="app/stocks.controller.js"></script>
   <script src="app/data.service.js"></script>

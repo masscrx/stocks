@@ -1,5 +1,6 @@
 'use strict';
 
 var app = angular.module('myApp', [
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'nvd3'
 ]);
