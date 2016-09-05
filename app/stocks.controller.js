@@ -43,17 +43,23 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   /** Stocks operations **/
   $scope.tickers = ["CIK","MMM","ABT","ABBV","ACN","ADBE","ADT","AES","AET","AFL","AMG","A","APD","ARG","AKAM","AA","ALXN","ATI"];
   $scope.stocks = [];
-  $scope.stocksLimit = 3;
+  var stocksLimit = 3;
   
   $scope.addStock = function(stock) {
-    dataFactory.getStock({name: stock, startDate: $scope.startDate, endDate: $scope.endDate}).success(function(data, status){
-      var objAdded = {
-        symbol: data["query"]["results"]["quote"][0]["Symbol"],
-        quotes: data["query"]["results"]["quote"]
-      };
-      $scope.stocks.push(objAdded);
-      console.log($scope.stocks);
-    });
+    if ($scope.stocks.length < stocksLimit) {
+      dataFactory.getStock({name: stock, startDate: $scope.startDate, endDate: $scope.endDate}).success(function(data, status){
+        var objAdded = {
+          symbol: data["query"]["results"]["quote"][0]["Symbol"],
+          quotes: data["query"]["results"]["quote"]
+        };
+        $scope.stocks.push(objAdded);
+        console.log($scope.stocks);
+      });
+    }
+    else {
+      window.alert("Reached stocks limit (3) !");
+    }
+    
   };
 
   $scope.delStock = function(stock) {

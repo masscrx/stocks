@@ -120,3 +120,8 @@ html, body {
 .ver-space {
   margin-bottom: 15px;
 }
+
+/** OTHER **/
+.clickable {
+  cursor: pointer;
+}
