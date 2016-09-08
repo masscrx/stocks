@@ -10,19 +10,6 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   $scope.startDate = defaultStartDate;
   $scope.endDate = defaultEndDate;
 
-  $scope.reloadStocksData = function() {
-    var loadedStocks = [];
-    if ($scope.stocks.length > 0) {
-      $scope.stocks.forEach(function(stock){
-        loadedStocks.push(stock.key);
-      });
-    }
-
-    dataFactory.refreshStocksData($scope.startDate, $scope.endDate, loadedStocks).success(function(data, status){
-      $scope.stocks = data;
-    });
-  };
-
   $scope.dateOptions = {
     dateDisabled: disabled,
     formatYear: 'yy',
@@ -79,6 +66,20 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
         $scope.stocks.splice(i, 1);
       }
     }
+  };
+
+  $scope.reloadStocksData = function() {
+    
+    var loadedStocks = [];
+    if ($scope.stocks.length > 0) {
+      $scope.stocks.forEach(function(stock){
+        loadedStocks.push(stock.key);
+      });
+    }
+
+    dataFactory.refreshStocksData($scope.startDate, $scope.endDate, loadedStocks).success(function(data, status){
+      $scope.stocks = data;
+    });
   };
 
   /** Chart **/
