@@ -10,6 +10,19 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   $scope.startDate = defaultStartDate;
   $scope.endDate = defaultEndDate;
 
+  $scope.reloadStocksData = function() {
+    var loadedStocks = [];
+    if ($scope.stocks.length > 0) {
+      $scope.stocks.forEach(function(stock){
+        loadedStocks.push(stock.key);
+      });
+    }
+
+    dataFactory.refreshStocksData($scope.startDate, $scope.endDate, loadedStocks).success(function(data, status){
+      $scope.stocks = data;
+    });
+  };
+
   $scope.dateOptions = {
     dateDisabled: disabled,
     formatYear: 'yy',
@@ -50,27 +63,22 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
 
     if ($scope.stocks.length < stocksLimit) {
       dataFactory.getStock({name: stock, startDate: $scope.startDate, endDate: $scope.endDate}).success(function(data, status){
-        console.log("Adding to stocks array: ", data)
         $scope.stocks.push(data);
-        console.log("Stocks array: ", $scope.stocks);
         $scope.apiOverallChart.update();
       });
     }
     else {
       window.alert("Reached stocks limit (3) !");
     }
-    
   };
 
   $scope.delStock = function(stock) {
     
     for (var i = 0; i < $scope.stocks.length; i++) {
-      if ($scope.stocks[i].symbol === stock) {
+      if ($scope.stocks[i].key === stock) {
         $scope.stocks.splice(i, 1);
       }
     }
-
-    console.log($scope.stocks);
   };
 
   /** Chart **/
@@ -80,15 +88,17 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
       type: 'lineChart',
       height: 450,
       margin : {
-          top: 20,
+          top: 0,
           right: 20,
-          bottom: 40,
-          left: 60
+          bottom: 60,
+          left: 50
       },
       x: function(d){ return d.date; },
       y: function(d){ return d.close; },
+      color: d3.scale.category10().range(),
+      duration: 300,
       useInteractiveGuideline: true,
-      duration: 100,
+      clipVoronoi: false,
       xAxis: {
               axisLabel: 'Date',
               tickFormat: function(d) {
@@ -106,19 +116,25 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
       }
     }
   };
+
+
   $scope.exampleData = [
       {
         key: "Cisco", values: [
-         { "date": 1469059200000, "close": 150.00 },
-         { "date": 1469145600000, "close": 160.00 },
-         { "date": 1469232000000, "close": 170.00 }
+         { "date": 1469059200000, "close": 3.41 },
+         { "date": 1469145600000, "close": 5.34 },
+         { "date": 1469232000000, "close": 3.20 },
+         { "date": 1469318400000, "close": 14.53},
+         { "date": 1469404800000, "close": 1.80 }
         ]
       },
       {
-        key: "Ewa", values: [
+        key: "Mikrotik", values: [
          { "date": 1469059200000, "close": 5.00 },
          { "date": 1469145600000, "close": 10.00 },
-         { "date": 1469232000000, "close": 20.00 }
+         { "date": 1469232000000, "close": 20.00 },
+         { "date": 1469318400000, "close": 9.20 },
+         { "date": 1469404800000, "close": 1.80 }
         ]
       },
 
