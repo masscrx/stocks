@@ -17,7 +17,7 @@
 <body ng-cloak>
   <div class="container-fluid" ng-controller="StocksController">
     <div class="row">
-      <div class="col-md-2 stock-list">
+      <div class="col-sm-3 col-md-2 stock-list">
           <p ng-repeat="tick in tickers track by $index">
             {{tick}} 
             <span class="pull-right">
@@ -26,7 +26,39 @@
             </span>
           </p>
       </div>
-      <div class="col-md-10 col-md-offset-2 main">
+
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <!-- Stocks list for small devices -->
+        <div class="row stocks-list-mobile">
+          <div class="col-sm-12">
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="status.open">
+                <uib-accordion-heading>
+                  Stocks list
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                </uib-accordion-heading>
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Company symbol</th>
+                      <th class="text-center">Add</th>
+                      <th class="text-center">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="tick in tickers track by $index">
+                      <td>{{ tick }}</td>
+                      <td class="text-center"><i class="fa fa-plus-square clickable" ng-click="addStock(tick)"></i></td>
+                      <td class="text-center"><i class="fa fa-minus-square clickable" ng-click="delStock(tick)"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </uib-accordion>
+          </div>
+        </div>
+        <!-- END -->
+        
         <!-- Overall chart -->
         <div class="row ver-space">
           <div class="col-md-12">
@@ -36,7 +68,7 @@
               </div>
               <div class="portlet-content">
                 <div class="row">
-                  <div class="col-md-5 col-md-offset-1">
+                  <div class="col-md-5 col-sm-12 col-md-offset-1">
                     <div class="form-inline">
                       <div class="form-group">
                         <div class="input-group">
@@ -48,7 +80,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-5 col-md-offset-1">
+                  <div class="col-md-5 col-sm-12 col-md-offset-1">
                     <div class="form-inline">
                       <div class="form-group">
                         <div class="input-group">

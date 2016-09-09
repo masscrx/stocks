@@ -7,21 +7,36 @@ html, body {
   padding: 0px;
 }
 
-.stock-list {
-  background-color: #455A64;
-  color: #FFFFFF;
-  font-weight: bold;
+@media only screen and (min-width: 768px) {
+  .stock-list {
+    background-color: #455A64;
+    color: #FFFFFF;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+  }
 
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  display: block;
-  padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  border-right: 1px solid #eee;
+  .stocks-list-mobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .stock-list {
+    display: none;
+  }
+
+  .stocks-list-mobile {
+    display: block;
+  }
 }
 
 .main {
