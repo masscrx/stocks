@@ -36,7 +36,7 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   // Disable weekend selection
   function disabled(data) {
     var date = data.date,
-      mode = data.mode;
+        mode = data.mode;
     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
   }
 
@@ -44,9 +44,15 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   $scope.tickers = ["CIK","MMM","ABT","ABBV","ACN","ADBE","ADT","AES","AET","AFL","AMG","A","APD","ARG","AKAM","AA","ALXN","ATI"];
   $scope.stocks = [];
   var stocksLimit = 3;
-  
 
   $scope.addStock = function(stock) {
+    // Check if stock is currently added for comparison
+    for (var i = 0; i < $scope.stocks.length; i++) {
+      if ($scope.stocks[i].key === stock) {
+        window.alert("Stock currently added for comparison !");
+        return;
+      }
+    }
 
     if ($scope.stocks.length < stocksLimit) {
       dataFactory.getStock({name: stock, startDate: $scope.startDate, endDate: $scope.endDate}).success(function(data, status){
@@ -60,7 +66,6 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   };
 
   $scope.delStock = function(stock) {
-    
     for (var i = 0; i < $scope.stocks.length; i++) {
       if ($scope.stocks[i].key === stock) {
         $scope.stocks.splice(i, 1);
@@ -69,14 +74,12 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
   };
 
   $scope.reloadStocksData = function() {
-    
     var loadedStocks = [];
     if ($scope.stocks.length > 0) {
       $scope.stocks.forEach(function(stock){
         loadedStocks.push(stock.key);
       });
     }
-
     dataFactory.refreshStocksData($scope.startDate, $scope.endDate, loadedStocks).success(function(data, status){
       $scope.stocks = data;
     });
@@ -89,56 +92,34 @@ app.controller("StocksController", ["$scope", "dataFactory", function($scope, da
       type: 'lineChart',
       height: 450,
       margin : {
-          top: 0,
-          right: 20,
-          bottom: 60,
-          left: 50
+        top: 0,
+        right: 20,
+        bottom: 60,
+        left: 50
       },
       x: function(d){ return d.date; },
       y: function(d){ return d.close; },
+
       color: d3.scale.category10().range(),
       duration: 300,
       useInteractiveGuideline: true,
       clipVoronoi: false,
+
       xAxis: {
-              axisLabel: 'Date',
-              tickFormat: function(d) {
-                  return d3.time.format("%Y-%m-%d")(new Date(d));
-              },
-              showMaxMin: false
-              },
+        axisLabel: 'Date',
+        showMaxMin: false,
+        tickFormat: function(d) {
+          return d3.time.format("%Y-%m-%d")(new Date(d));
+        }
+      },
 
       yAxis: {
-          axisLabel: 'Stock Price',
-          tickFormat: function(d){
-              return '$' + d3.format(',.1f')(d);
-          },
-          showMaxMin: false
+        axisLabel: 'Stock Price',
+        showMaxMin: false,
+        tickFormat: function(d){
+          return '$' + d3.format(',.1f')(d);
+        }
       }
     }
   };
-
-
-  $scope.exampleData = [
-      {
-        key: "Cisco", values: [
-         { "date": 1469059200000, "close": 3.41 },
-         { "date": 1469145600000, "close": 5.34 },
-         { "date": 1469232000000, "close": 3.20 },
-         { "date": 1469318400000, "close": 14.53},
-         { "date": 1469404800000, "close": 1.80 }
-        ]
-      },
-      {
-        key: "Mikrotik", values: [
-         { "date": 1469059200000, "close": 5.00 },
-         { "date": 1469145600000, "close": 10.00 },
-         { "date": 1469232000000, "close": 20.00 },
-         { "date": 1469318400000, "close": 9.20 },
-         { "date": 1469404800000, "close": 1.80 }
-        ]
-      },
-
-    ];
-
 }]);

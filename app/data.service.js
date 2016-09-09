@@ -7,9 +7,9 @@ app.factory("dataFactory", ["$http", function($http){
 
   function getStockIndex(value, myArray){
     for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].key === value) {
-            return i;
-        }
+      if (myArray[i].key === value) {
+          return i;
+      }
     }
   }
 
@@ -37,16 +37,16 @@ app.factory("dataFactory", ["$http", function($http){
           var stockData = _data["query"]["results"]["quote"];
 
           angular.forEach(stockData, function(obj, index){
-          formattedObj.values.push({
-            date: new Date(obj.Date).getTime(),
-            open: Number.parseFloat(obj.Open),
-            high: Number.parseFloat(obj.High),
-            low: Number.parseFloat(obj.Low),
-            close: Number.parseFloat(obj.Close),
-            volume: Number.parseFloat(obj.Volume),
-            adj_close: Number.parseFloat(obj.Adj_Close)
+            formattedObj.values.push({
+              date: new Date(obj.Date).getTime(),
+              open: Number.parseFloat(obj.Open),
+              high: Number.parseFloat(obj.High),
+              low: Number.parseFloat(obj.Low),
+              close: Number.parseFloat(obj.Close),
+              volume: Number.parseFloat(obj.Volume),
+              adj_close: Number.parseFloat(obj.Adj_Close)
+            });
           });
-        });
           return formattedObj;
         }
       });
@@ -92,10 +92,8 @@ app.factory("dataFactory", ["$http", function($http){
               volume: Number.parseFloat(stocksData[ii].Volume),
               adj_close: Number.parseFloat(stocksData[ii].Adj_Close)
             });
-
           }
           return formattedStocksArray;
-        
         }
       });
     }
