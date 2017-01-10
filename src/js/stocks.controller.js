@@ -1,6 +1,8 @@
 'use strict';
 
-app.controller("StocksController", ["$scope", "dataFactory", function($scope, dataFactory) {
+angular.module('app')
+.controller("StocksController", ["$scope", "dataFactory", 
+  function($scope, dataFactory) {
   
   /* Datepicker */
   var currentDate, defaultEndDate;

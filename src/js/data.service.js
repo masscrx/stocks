@@ -1,6 +1,7 @@
 "use strict";
 
-app.factory("dataFactory", ["$http", function($http){
+angular.module('app.services', [])
+.factory("dataFactory", ["$http", function($http){
   function formatDate(date){
     return date.toISOString().substring(0, 10);
   }

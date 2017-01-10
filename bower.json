@@ -21,5 +21,13 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "fontawesome#^4.6.3",
     "angular-nvd3": "^1.0.9"
+  },
+  "overrides" : {
+    "bootstrap" : {
+      "main" : ["./dist/css/bootstrap.css"]
+    },
+    "font-awesome" : {
+      "main" : "./css/font-awesome.css"
+    }
   }
 }
