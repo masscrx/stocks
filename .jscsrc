@@ -1,0 +1,6 @@
+{
+  "preset" : "airbnb",
+  "requireTrailingComma" : false,
+  "validateLineBreaks" : false,
+  "requireSpacesInAnonymousFunctionExpression" : false
+}

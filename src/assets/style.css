@@ -165,3 +165,23 @@ html, body {
 .text-close {
   color: #3F51B5;
 }
+
+/** CHART **/
+svg {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #e7eef4;
+  shape-rendering: crispEdges;
+}
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+rect {
+  stroke-width: 2;
+}

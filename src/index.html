@@ -65,7 +65,7 @@
                 <h3><i class="fa fa-bar-chart-o"></i>Overall chart</h3>
               </div>
               <div class="portlet-content">
-                <div class="row">
+                <div class="row ver-space">
                   <div class="col-md-5 col-sm-12 col-md-offset-1">
                     <div class="form-inline">
                       <div class="form-group">
@@ -92,8 +92,16 @@
                   </div>
                 </div>
                 <div class="row">
+                  <div class="col-md-4" ng-repeat="stock in stocks">
+                    <div class="well well-sm">
+                      {{ stock.key }}
+                      <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="delStock(stock.key)">remove</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-12">
-                    <nvd3 class="with-3d-shadow with-transitions" options="options.overallChart" data="stocks" api="apiOverallChart"></nvd3>
+                    <line-chart data="stocks"></line-chart>
                   </div>
                 </div>
               </div>

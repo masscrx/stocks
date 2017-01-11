@@ -28,6 +28,9 @@
     },
     "font-awesome" : {
       "main" : "./css/font-awesome.css"
+    },
+    "d3" : {
+      "main" : "./d3.js"
     }
   }
 }
