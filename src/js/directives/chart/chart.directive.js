@@ -7,6 +7,9 @@ module.exports = function() {
       data: '='
     },
     replace: true,
+    controller: [function() {
+      console.log('chart controller');
+    }],
     link: function(scope, element, attrs) {
       console.log('d3 directive link scope: ', scope);
 
@@ -66,7 +69,8 @@ module.exports = function() {
 
       // watch the data source for changes to dynamically update the visualization
       scope.$watch('data', function(newData, oldData) {
-          return scope.render(newData);
+          console.log('chart directive data changed', newData);
+          return newData.length > 0 ? scope.render(newData) : svg.selectAll('*').remove();
       }, true);
 
       scope.render = function(data) {
