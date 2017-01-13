@@ -8,5 +8,6 @@ angular.module('app', [
   'ui.bootstrap',
   'app.modules',
   'app.services',
-  'app.directives'
+  'app.directives',
+  'app.partials'
 ]);
