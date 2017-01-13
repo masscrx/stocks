@@ -2,5 +2,7 @@
   "preset" : "airbnb",
   "requireTrailingComma" : false,
   "validateLineBreaks" : false,
-  "requireSpacesInAnonymousFunctionExpression" : false
+  "requireSpacesInAnonymousFunctionExpression" : false,
+  "requirePaddingNewLinesBeforeLineComments" : false,
+  "requirePaddingNewLinesAfterBlocks" : false
 }

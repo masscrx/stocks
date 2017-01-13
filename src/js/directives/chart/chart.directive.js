@@ -69,8 +69,8 @@ module.exports = function() {
 
       // watch the data source for changes to dynamically update the visualization
       scope.$watch('data', function(newData, oldData) {
-          console.log('chart directive data changed', newData);
-          return newData.length > 0 ? scope.render(newData) : svg.selectAll('*').remove();
+        console.log('chart directive data changed', newData);
+        return newData.length > 0 ? scope.render(newData) : svg.selectAll('*').remove();
       }, true);
 
       scope.render = function(data) {
@@ -131,8 +131,8 @@ module.exports = function() {
 
         // transition from previous paths to new paths
         lines.transition().duration(1000)
-          .attr('d', function(d) { return lineGen(d.values)})
-          .style('stroke', function(d) { return color(d.key); })
+          .attr('d', function(d) { return lineGen(d.values); })
+          .style('stroke', function(d) { return color(d.key); });
 
         // enter any new lines
         lines.enter().append('path')
@@ -164,7 +164,7 @@ module.exports = function() {
           .attr('y', function(d, i) { return i *  20 + 9;})
         .text(function(d) {
           return d.key;
-          });
+        });
       };
     }
   };

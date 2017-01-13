@@ -21,7 +21,10 @@ module.exports = function($http) {
         method: 'GET',
         url: 'http://query.yahooapis.com/v1/public/yql',
         params: {
-          q: "select * from yahoo.finance.historicaldata " + "where symbol in " + "('" + stock.name + "') " + "and startDate = '" + _startDate + "' and endDate = '" + _endDate + "'",
+          q: 'select * from yahoo.finance.historicaldata ' +
+              'where symbol in ' + '(\'' + stock.name + '\') ' +
+              'and startDate = \'' + _startDate + '\' and endDate = \'' +
+              _endDate + '\'',
           env: 'http://datatables.org/alltables.env',
           format: 'json'
         },
@@ -68,7 +71,9 @@ module.exports = function($http) {
         method: 'GET',
         url: 'http://query.yahooapis.com/v1/public/yql',
         params: {
-          q: "select * from yahoo.finance.historicaldata " + "where symbol in " + "(" + stocksQueryString + ") " + "and startDate = '" + _startDate + "' and endDate = '" + _endDate + "'",
+          q: 'select * from yahoo.finance.historicaldata ' +
+             'where symbol in ' + '(' + stocksQueryString + ') ' +
+             'and startDate = \'' + _startDate + '\' and endDate = \'' + _endDate + '\'',
           env: 'http://datatables.org/alltables.env',
           format: 'json'
         },
