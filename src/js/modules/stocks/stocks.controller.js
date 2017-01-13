@@ -47,22 +47,32 @@ module.exports = function($scope, dataFactory) {
   $scope.stocks = [];
   var stocksLimit = 3;
 
-  $scope.addStock = function(stock) {
-    // Check if stock is currently added for comparison
+  $scope.stockInComparison = function(name) {
+    var inComparison = false;
     for (var i = 0; i < $scope.stocks.length; i++) {
-      if ($scope.stocks[i].key === stock) {
-        window.alert('Stock currently added for comparison !');
-        return;
+      if ($scope.stocks[i].key === name) {
+        inComparison = true;
       }
     }
 
+    return inComparison;
+  };
+
+  $scope.addStock = function(stock) {
+    // Check if stock is currently added for comparison
+    if ($scope.stockInComparison(stock)) {
+      window.alert('Stock currently added for comparison !');
+      return;
+    }
+
     if ($scope.stocks.length < stocksLimit) {
-      dataFactory.getStock({ name: stock, startDate: $scope.startDate, endDate: $scope.endDate })
+      dataFactory
+        .getStock({ name: stock, startDate: $scope.startDate, endDate: $scope.endDate })
         .success(function(data, status) {
-        $scope.stocks.push(data);
-      });
+          $scope.stocks.push(data);
+        });
     } else {
-      window.alert('Reached stocks limit (3) !');
+      window.alert('Reached stocks limit ' + stocksLimit + ' !');
     }
   };
 
@@ -81,10 +91,11 @@ module.exports = function($scope, dataFactory) {
         loadedStocks.push(stock.key);
       });
 
-      dataFactory.refreshStocksData($scope.startDate, $scope.endDate, loadedStocks)
+      dataFactory
+        .refreshStocksData($scope.startDate, $scope.endDate, loadedStocks)
         .success(function(data, status) {
-        $scope.stocks = data;
-      });
+          $scope.stocks = data;
+        });
     }
   };
 };
