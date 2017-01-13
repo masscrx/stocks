@@ -1,0 +1,30 @@
+<uib-accordion close-others="oneAtATime" ng-repeat="stock in stocks">
+  <div uib-accordion-group class="panel-default" is-open="status.open">
+    <uib-accordion-heading>
+      <i class="fa fa-bar-chart-o"></i> {{ stock.key }} - detailed information
+      <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+    </uib-accordion-heading>
+    <table class="table table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Low price</th>
+          <th>High price</th>
+          <th>Open</th>
+          <th>Close</th>
+          <th>Volume</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="day in stock.values">
+          <td>{{ day.date | date : "mediumDate" }}</td>
+          <td class="text-low">{{ day.low | currency:"$"}}</td>
+          <td class="text-high">{{ day.high | currency:"$"}}</td>
+          <td class="text-open">{{ day.open | currency:"$"}}</td>
+          <td class="text-close">{{ day.close | currency:"$"}}</td>
+          <td>{{ day.volume | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</uib-accordion>
