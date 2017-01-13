@@ -16,11 +16,10 @@
   <div class="container-fluid" ng-controller="StocksController">
     <div class="row">
       <div class="col-lg-2 stock-list">
-          <p ng-repeat="tick in tickers track by $index">
+          <p ng-repeat="tick in tickers">
             {{tick}} 
             <span class="pull-right">
-              <i class="fa fa-plus-square clickable" ng-click="addStock(tick)"></i>
-              <i class="fa fa-minus-square clickable" ng-click="delStock(tick)"></i>
+              <manage-button></manage-button>
             </span>
           </p>
       </div>
@@ -39,15 +38,15 @@
                   <thead>
                     <tr>
                       <th>Company symbol</th>
-                      <th class="text-center">Add</th>
-                      <th class="text-center">Remove</th>
+                      <th class="text-center">Add/Remove</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr ng-repeat="tick in tickers track by $index">
                       <td>{{ tick }}</td>
-                      <td class="text-center"><i class="fa fa-plus-square clickable" ng-click="addStock(tick)"></i></td>
-                      <td class="text-center"><i class="fa fa-minus-square clickable" ng-click="delStock(tick)"></i></td>
+                      <td class="text-center">
+                        <manage-button></manage-button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -88,14 +87,6 @@
                           <div class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-click="open2()"></i></div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4" ng-repeat="stock in stocks">
-                    <div class="well well-sm">
-                      {{ stock.key }}
-                      <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="delStock(stock.key)">remove</button>
                     </div>
                   </div>
                 </div>
