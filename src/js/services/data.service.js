@@ -11,6 +11,19 @@ module.exports = function($http) {
     }
   }
 
+  function formatStockValues(obj) {
+    var formattedObj = {
+      date: obj.Date,
+      open: Number.parseFloat(obj.Open),
+      high: Number.parseFloat(obj.High),
+      low: Number.parseFloat(obj.Low),
+      close: Number.parseFloat(obj.Close),
+      volume: Number.parseFloat(obj.Volume),
+      adj_close: Number.parseFloat(obj.Adj_Close)
+    };
+    return formattedObj;
+  }
+
   return {
     getStock: function(stock) {
       /** Convert date to format expected by yahoo API **/
@@ -38,15 +51,7 @@ module.exports = function($http) {
           var stockData = _data.query.results.quote;
 
           angular.forEach(stockData, function(obj, index) {
-            formattedObj.values.push({
-              date: obj.Date,
-              open: Number.parseFloat(obj.Open),
-              high: Number.parseFloat(obj.High),
-              low: Number.parseFloat(obj.Low),
-              close: Number.parseFloat(obj.Close),
-              volume: Number.parseFloat(obj.Volume),
-              adj_close: Number.parseFloat(obj.Adj_Close)
-            });
+            formattedObj.values.push(formatStockValues(obj));
           });
 
           return formattedObj;
@@ -89,15 +94,7 @@ module.exports = function($http) {
 
           for (var ii = 0; ii < stocksData.length; ii++) {
             var index = getStockIndex(stocksData[ii].Symbol, formattedStocksArray);
-            formattedStocksArray[index].values.push({
-              date: stocksData[ii].Date,
-              open: Number.parseFloat(stocksData[ii].Open),
-              high: Number.parseFloat(stocksData[ii].High),
-              low: Number.parseFloat(stocksData[ii].Low),
-              close: Number.parseFloat(stocksData[ii].Close),
-              volume: Number.parseFloat(stocksData[ii].Volume),
-              adj_close: Number.parseFloat(stocksData[ii].Adj_Close)
-            });
+            formattedStocksArray[index].values.push(formatStockValues(stocksData[ii]));
           }
 
           return formattedStocksArray;

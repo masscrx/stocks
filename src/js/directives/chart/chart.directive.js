@@ -7,9 +7,6 @@ module.exports = function() {
       data: '='
     },
     replace: true,
-    controller: [function() {
-      console.log('chart controller');
-    }],
     link: function(scope, element, attrs) {
       console.log('d3 directive link scope: ', scope);
 
