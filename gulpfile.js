@@ -99,10 +99,10 @@ gulp.task('jscs', function() {
 gulp.task('build-index', function() {
   return gulp
     .src(paths.index)
-    .pipe(inject(gulp.src(paths.dest.styles), { ignorePath: 'app' }))
+    .pipe(inject(gulp.src(paths.dest.styles), { ignorePath: 'app', addRootSlash: false }))
     .pipe(config.production ? 
-      inject(gulp.src(injectJsProd), { ignorePath: 'app' }) :
-      inject(gulp.src(injectJsDev), { ignorePath: 'app' })
+      inject(gulp.src(injectJsProd), { ignorePath: 'app', addRootSlash: false }) :
+      inject(gulp.src(injectJsDev), { ignorePath: 'app', addRootSlash: false })
     )
     .pipe(gulp.dest(paths.dest.default));
 });
