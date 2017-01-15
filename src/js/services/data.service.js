@@ -1,4 +1,4 @@
-module.exports = function($http) {
+module.exports = ['$http', function($http) {
   function formatDate(date) {
     return date.toISOString().substring(0, 10);
   }
@@ -102,4 +102,4 @@ module.exports = function($http) {
       });
     }
   };
-};
+}];
