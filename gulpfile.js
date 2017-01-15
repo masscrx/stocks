@@ -13,8 +13,16 @@ var source = require('vinyl-source-stream');
 var jscs = require('gulp-jscs');
 var templateCache = require('gulp-angular-templatecache');
 var minifyHtml    = require('gulp-minify-html');
+var util = require('gulp-util');
+var streamify = require('gulp-streamify');
+var ngAnnotate = require('gulp-ng-annotate');
+
+var config = {
+  production: !!util.env.production,
+};
 
 var paths = {
+
   appMain: './src/js/app.module.js',
   scripts: 'src/**/*.js',
   styles: './src/**/*.css',
@@ -34,6 +42,19 @@ var paths = {
     partials: './app/partials.js'
   }
 };
+
+var injectJsProd = [
+  './app/vendors.min.js',
+  './app/partials.min.js',
+  './app/app.min.js'
+];
+
+var injectJsDev = [
+  './app/vendors.min.js',
+  './app/partials.js',
+  './app/app.js'
+];
+
 
 gulp.task('clean', function (cb) {
   return del(['app'], cb);
@@ -79,14 +100,19 @@ gulp.task('build-index', function() {
   return gulp
     .src(paths.index)
     .pipe(inject(gulp.src(paths.dest.styles), { ignorePath: 'app' }))
-    .pipe(inject(gulp.src([paths.dest.vendors, paths.dest.partials, paths.dest.app]), { ignorePath: 'app' }))
+    .pipe(config.production ? 
+      inject(gulp.src(injectJsProd), { ignorePath: 'app' }) :
+      inject(gulp.src(injectJsDev), { ignorePath: 'app' })
+    )
     .pipe(gulp.dest(paths.dest.default));
 });
 
 gulp.task('browserify', function () {
   return browserify(paths.appMain, { debug: true })
   .bundle()
-  .pipe(source('app.js'))
+  .pipe(config.production ? source('app.min.js') : source('app.js'))
+  .pipe(ngAnnotate())
+  .pipe(config.production ? streamify(uglify()) : util.noop())
   .pipe(gulp.dest(paths.dest.default));
 });
 
@@ -94,16 +120,12 @@ gulp.task('browserify', function () {
 
 gulp.task('partials', function() {
   return gulp.src(paths.partials)
-    // .pipe(minifyHtml({
-    //   empty: true,
-    //   spare: true,
-    //   quotes: true
-    // }))
+    .pipe(config.production ? minifyHtml({empty: true, spare: true, quotes: true}) : util.noop())
     .pipe(templateCache({
       module: 'app.partials',
       standalone: true
     }))
-    .pipe(concat('partials.js'))
+    .pipe(config.production ? concat('partials.min.js') : concat('partials.js'))
     .pipe(gulp.dest(paths.dest.default));
 });
 

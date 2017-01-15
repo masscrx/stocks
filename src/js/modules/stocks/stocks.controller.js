@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function($scope, dataFactory) {
+module.exports = ['$scope', 'dataFactory', function($scope, dataFactory) {
 
   /* Datepicker */
   var currentDate;
@@ -98,4 +98,4 @@ module.exports = function($scope, dataFactory) {
         });
     }
   };
-};
+}];
