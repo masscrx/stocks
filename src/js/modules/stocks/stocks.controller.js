@@ -68,8 +68,8 @@ module.exports = ['$scope', 'dataFactory', function($scope, dataFactory) {
     if ($scope.stocks.length < stocksLimit) {
       dataFactory
         .getStock({ name: stock, startDate: $scope.startDate, endDate: $scope.endDate })
-        .success(function(data, status) {
-          $scope.stocks.push(data);
+        .then(function(res, status) {
+          $scope.stocks.push(res.data);
         });
     } else {
       window.alert('Reached stocks limit ' + stocksLimit + ' !');
@@ -93,8 +93,8 @@ module.exports = ['$scope', 'dataFactory', function($scope, dataFactory) {
 
       dataFactory
         .refreshStocksData($scope.startDate, $scope.endDate, loadedStocks)
-        .success(function(data, status) {
-          $scope.stocks = data;
+        .then(function(res, status) {
+          $scope.stocks = res.data;
         });
     }
   };
