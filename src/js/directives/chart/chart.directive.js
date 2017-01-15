@@ -57,17 +57,11 @@ module.exports = function() {
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      // add legend
-      var legend = svg.append('g')
-        .attr('class', 'legend')
-        .attr('height', 100)
-        .attr('width', width)
-        .attr('transform', 'translate(-20,50)');
-
       // watch the data source for changes to dynamically update the visualization
       scope.$watch('data', function(newData, oldData) {
         console.log('chart directive data changed', newData);
         return newData.length > 0 ? scope.render(newData) : svg.selectAll('*').remove();
+        //return scope.render(newData);
       }, true);
 
       scope.render = function(data) {
@@ -140,7 +134,13 @@ module.exports = function() {
         // exit
         lines.exit().remove();
 
-        // Legend update
+        // Legend
+        var legend = svg.append('g')
+        .attr('class', 'legend')
+        .attr('height', 100)
+        .attr('width', width)
+        .attr('transform', 'translate(100,0)');
+
         legend.selectAll('rect')
           .data(data)
           .enter()

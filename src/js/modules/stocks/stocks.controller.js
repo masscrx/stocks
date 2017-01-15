@@ -42,7 +42,7 @@ module.exports = ['$scope', 'dataFactory', function($scope, dataFactory) {
   }
 
   /** Stocks operations **/
-  $scope.tickers = ['CIK', 'MMM', 'ABT', 'ABBV', 'ACN', 'ADBE', 'ADT', 'AES',
+  $scope.tickers = ['CIK', 'MMM', 'ABT', 'ABBV', 'ACN', 'ADBE', 'AES',
                     'AET', 'AFL', 'AMG', 'A', 'APD', 'ARG', 'AKAM', 'AA', 'ALXN', 'ATI'];
   $scope.stocks = [];
   var stocksLimit = 3;
